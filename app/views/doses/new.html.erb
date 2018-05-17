@@ -1,2 +1,17 @@
-<h1>Doses#new</h1>
-<p>Find me in app/views/doses/new.html.erb</p>
+<div class="container">
+  <h1>Add an ingredient to <%= @cocktail.name %></h1>
+  <%= simple_form_for([@cocktail, @dose]) do |f| %>
+    <% if @dose.errors.any? %>
+      <div class="errors-container">
+        <ul>
+          <% @dose.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+         </ul>
+      </div>
+    <% end %>
+    <%= f.association :ingredient, collection: Ingredient.order(:name), prompt: "Choose an ingredient" %>
+    <%= f.input :description, label: "Which quantity should be added?" %>
+    <%= f.submit "Add an ingredient", class: "btn btn-primary" %>
+  <% end %>
+</div>
